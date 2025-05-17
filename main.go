@@ -41,6 +41,6 @@ func main() {
 	handlers.RegisterCalculateHandler(mux, db)
 	handlers.RegisterPackSizeHandler(mux, db)
 
-	fmt.Println("Listening on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	fmt.Println("Listening on http://localhost:80")
+	log.Fatal(http.ListenAndServe(":80", mux))
 }
