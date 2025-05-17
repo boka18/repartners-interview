@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Pack Size Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin: 0.3em 0;
+        }
+
+        button.delete-btn {
+            margin-left: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pack Size Calculator</h1>
+
+    <h2>Pack Sizes</h2>
+    <ul id="packSizesList"></ul>
+
+    <h3>Add Pack Size</h3>
+    <input type="number" id="newPackSizeInput" min="1" />
+    <button id="addPackSizeBtn">Add</button>
+
+    <hr />
+
+    <div>
+        <label>Order amount: <input type="number" id="orderInput" min="1" /></label>
+        <button id="calcBtn">Calculate</button>
+    </div>
+
+    <h2>Results:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        async function fetchPackSizes() {
+            try {
+                const res = await fetch('/pack-size');
+                if (!res.ok) throw new Error('Failed to fetch pack sizes');
+                const packSizes = await res.json();
+                renderPackSizes(packSizes);
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+
+        function renderPackSizes(packSizes) {
+            const list = document.getElementById('packSizesList');
+            list.innerHTML = '';
+            packSizes.forEach(p => {
+                const li = document.createElement('li');
+                li.textContent = p.size;
+
+                const delBtn = document.createElement('button');
+                delBtn.textContent = 'Delete';
+                delBtn.className = 'delete-btn';
+                delBtn.onclick = async () => {
+                    if (!confirm(`Delete pack size ${p.size}?`)) return;
+                    try {
+                        const res = await fetch('/pack-size/' + p.id, { method: 'DELETE' });
+                        if (!res.ok) throw new Error('Failed to delete pack size');
+                        await fetchPackSizes();
+                    } catch (err) {
+                        alert(err.message);
+                    }
+                };
+
+                li.appendChild(delBtn);
+                list.appendChild(li);
+            });
+        }
+
+        document.getElementById('addPackSizeBtn').addEventListener('click', async () => {
+            const val = parseInt(document.getElementById('newPackSizeInput').value, 10);
+            if (!val || val < 1) {
+                alert('Please enter a valid pack size number > 0');
+                return;
+            }
+            try {
+                const res = await fetch('/pack-size', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value: val })
+                });
+                if (!res.ok) throw new Error('Failed to add pack size');
+                document.getElementById('newPackSizeInput').value = '';
+                await fetchPackSizes();
+            } catch (err) {
+                alert(err.message);
+            }
+        });
+
+        document.getElementById('calcBtn').addEventListener('click', async () => {
+            const order = document.getElementById('orderInput').value;
+            if (!order || order < 1) {
+                alert('Please enter a valid order amount > 0');
+                return;
+            }
+            try {
+                const response = await fetch(`/calculate?order=${order}`);
+                if (!response.ok) throw new Error(await response.text());
+                const data = await response.json();
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                document.getElementById('result').textContent = 'Error: ' + err.message;
+            }
+        });
+
+        // Initial load of pack sizes
+        fetchPackSizes();
+    </script>
+</body>
+
+</html>
