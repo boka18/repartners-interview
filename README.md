@@ -15,3 +15,7 @@
 - POST  /api/pack-size  // To create pack-size using json body {"value": {packSize: int}}
 - DEL   /api/pack-size/{id} // To delete pack size by id
 - GET   /api/calculate?order={n} // To calculate pack size [order query param is required]
+
+## Tests
+There are table driven tests written for PackSize.Calulate method.   
+To run the tests: `go test ./...`

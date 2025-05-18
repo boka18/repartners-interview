@@ -8,7 +8,7 @@ import (
 	"github.com/boka18/repartners-interview/calculator"
 )
 
-func TestCalculate(t *testing.T) {
+func TestPackSizeCalculate(t *testing.T) {
 	pc := calculator.NewPackSize()
 
 	tests := []struct {
