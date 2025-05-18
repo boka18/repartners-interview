@@ -48,7 +48,7 @@
     <script>
         async function fetchPackSizes() {
             try {
-                const res = await fetch('/pack-size');
+                const res = await fetch('/api/pack-size');
                 if (!res.ok) throw new Error('Failed to fetch pack sizes');
                 const packSizes = await res.json();
                 renderPackSizes(packSizes);
@@ -70,7 +70,7 @@
                 delBtn.onclick = async () => {
                     if (!confirm(`Delete pack size ${p.size}?`)) return;
                     try {
-                        const res = await fetch('/pack-size/' + p.id, { method: 'DELETE' });
+                        const res = await fetch('/api/pack-size/' + p.id, { method: 'DELETE' });
                         if (!res.ok) throw new Error('Failed to delete pack size');
                         await fetchPackSizes();
                     } catch (err) {
@@ -90,7 +90,7 @@
                 return;
             }
             try {
-                const res = await fetch('/pack-size', {
+                const res = await fetch('/api/pack-size', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ value: val })
@@ -110,7 +110,7 @@
                 return;
             }
             try {
-                const response = await fetch(`/calculate?order=${order}`);
+                const response = await fetch(`/api/calculate?order=${order}`);
                 if (!response.ok) throw new Error(await response.text());
                 const data = await response.json();
                 document.getElementById('result').textContent = JSON.stringify(data, null, 2);

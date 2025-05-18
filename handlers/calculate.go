@@ -16,7 +16,7 @@ type ApiResponseCalculate struct {
 
 // RegisterCalculateHandler attaches the GET /calculate handler to the router
 func RegisterCalculateHandler(mux *http.ServeMux, db *sql.DB) {
-	mux.HandleFunc("/calculate", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/calculate", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return

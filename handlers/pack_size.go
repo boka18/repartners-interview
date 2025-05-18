@@ -10,7 +10,7 @@ import (
 
 // RegisterCalculateHandler attaches the GET /calculate handler to the router
 func RegisterPackSizeHandler(mux *http.ServeMux, db *sql.DB) {
-	mux.HandleFunc("/pack-size/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/pack-size/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodDelete {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
@@ -29,7 +29,7 @@ func RegisterPackSizeHandler(mux *http.ServeMux, db *sql.DB) {
 		handlePackSizeDel(w, r, db, id)
 	})
 
-	mux.HandleFunc("/pack-size", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/pack-size", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
 			handlePackSizeGet(w, r, db)
