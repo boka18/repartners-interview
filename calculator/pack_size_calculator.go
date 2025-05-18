@@ -1,7 +1,6 @@
 package calculator
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -12,7 +11,7 @@ type Pack struct {
 
 type Result struct {
 	TotalItems int
-	PacksUsed  map[int]int // packSize -> count
+	PacksUsed  map[int]int
 }
 
 type PackSize struct {
@@ -49,8 +48,6 @@ func (pc *PackSize) Calculate(packSizes []int, order int) Result {
 	maxExtra := max(packSizes...) // to allow minimal overage
 	limit := order + maxExtra
 
-	fmt.Printf("maxExtra: %d; limit: %d\n", maxExtra, limit)
-
 	// DP state: for each amount, store total packs used and pack breakdown
 	type state struct {
 		totalPacks int
@@ -73,7 +70,7 @@ func (pc *PackSize) Calculate(packSizes []int, order int) Result {
 				}
 				newPacks[size]++
 
-				// Use this if dp[i] is nil or this solution uses fewer packs
+				// use this if dp[i] is nil or this solution uses fewer packs
 				if dp[i] == nil || totalPacks < dp[i].totalPacks {
 					dp[i] = &state{totalPacks: totalPacks, packsUsed: newPacks}
 				}
@@ -81,7 +78,7 @@ func (pc *PackSize) Calculate(packSizes []int, order int) Result {
 		}
 	}
 
-	// Find the best solution at or above the target order
+	// find the best solution at or above the target order
 	for i := order; i <= limit; i++ {
 		if dp[i] != nil {
 			return Result{
@@ -91,7 +88,7 @@ func (pc *PackSize) Calculate(packSizes []int, order int) Result {
 		}
 	}
 
-	// Fallback (shouldn't happen with valid input)
+	// fallback (shouldn't happen with valid input)
 	return Result{TotalItems: -1, PacksUsed: map[int]int{}}
 }
 

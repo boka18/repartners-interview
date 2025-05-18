@@ -14,7 +14,6 @@ type ApiResponseCalculate struct {
 	PacksUsed  map[int]int `json:"packs_used"`
 }
 
-// RegisterCalculateHandler attaches the GET /calculate handler to the router
 func RegisterCalculateHandler(mux *http.ServeMux, db *sql.DB) {
 	mux.HandleFunc("/api/calculate", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
@@ -35,7 +34,7 @@ func RegisterCalculateHandler(mux *http.ServeMux, db *sql.DB) {
 			return
 		}
 
-		// Read pack sizes from DB
+		// read pack sizes from DB
 		packSizes, err := getPackSizesFromDB(db)
 		if err != nil {
 			http.Error(w, "Failed to fetch pack sizes", http.StatusInternalServerError)

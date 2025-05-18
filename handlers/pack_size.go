@@ -8,7 +8,6 @@ import (
 	"strings"
 )
 
-// RegisterCalculateHandler attaches the GET /calculate handler to the router
 func RegisterPackSizeHandler(mux *http.ServeMux, db *sql.DB) {
 	mux.HandleFunc("/api/pack-size/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodDelete {
