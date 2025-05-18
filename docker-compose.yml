@@ -2,7 +2,7 @@ services:
   api:
     build: .
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       - ENV=develop
       - DB_HOST=database-1.c5aeoeicslnx.eu-central-1.rds.amazonaws.com

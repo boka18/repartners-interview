@@ -37,9 +37,10 @@ func connectToDB() *sql.DB {
 
 func main() {
 	db := connectToDB()
-	pingErr := db.Ping()
-	fmt.Println("ping err")
-	fmt.Println(pingErr)
+	err := db.Ping()
+	if err != nil {
+		fmt.Printf("err pinging db: %s", err.Error())
+	}
 	defer db.Close()
 
 	mux := http.NewServeMux()
