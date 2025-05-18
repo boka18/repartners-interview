@@ -15,7 +15,7 @@ func RegisterPackSizeHandler(mux *http.ServeMux, db *sql.DB) {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
 
-		idStr := strings.TrimPrefix(r.URL.Path, "/pack-size/")
+		idStr := strings.TrimPrefix(r.URL.Path, "/api/pack-size/")
 		if idStr == "" {
 			http.Error(w, "Missing ID", http.StatusBadRequest)
 			return
