@@ -8,7 +8,8 @@
         - if port '80' is not available on your local machine, replace the `docker-compose.yml` port segment from "80:80" to "8080:80" and use localhost:8080
 
 ### Live Demo
-1. Open `http://repartners-interview-env-v3.eba-mmpw86mp.eu-central-1.elasticbeanstalk.com` in your favorite browser.
+1. Open `http://repartners-interview-env-v3.eba-mmpw86mp.eu-central-1.elasticbeanstalk.com` in your favorite browser.   
+Note: I've deployed this service using AWS elasticbeanstalk.
 
 ## Api Routes
 - GET   /api/pack-size  // To get all available pack sizes
