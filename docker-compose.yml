@@ -3,3 +3,10 @@ services:
     build: .
     ports:
       - "80:80"
+    environment:
+      - ENV=develop
+      - DB_HOST=database-1.c5aeoeicslnx.eu-central-1.rds.amazonaws.com
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=Secret21#
+      - DB_NAME=postgres
