@@ -71,7 +71,7 @@ func (pc *PackSize) Calculate(packSizes []int, order int) Result {
 				newPacks[size]++
 
 				// use this if dp[i] is nil or this solution uses fewer packs
-				if dp[i] == nil || totalPacks < dp[i].totalPacks {
+				if dp[i] == nil || totalPacks <= dp[i].totalPacks {
 					dp[i] = &state{totalPacks: totalPacks, packsUsed: newPacks}
 				}
 			}
